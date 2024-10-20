@@ -12,6 +12,15 @@ const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 const generatePoints = (vertexNum, startX, startY, radius) => {
     const points = []
     for (let i = 0; i < vertexNum; i++) 
@@ -22,8 +31,8 @@ const generatePoints = (vertexNum, startX, startY, radius) => {
 }
 
 const drawRegularPolygon = (vertexNum) => {
-    const points = generatePoints(vertexNum, getRandomInt(10,250), getRandomInt(10,250), 50)
-    canvasHandler.drawElement(new Element(points, "green"))
+    const points = generatePoints(vertexNum, getRandomInt(50,500), getRandomInt(50,500), 50)
+    canvasHandler.drawElement(new Element(points, getRandomColor()))
 }
 
 const onButtonClick = (vertexNum) => {
