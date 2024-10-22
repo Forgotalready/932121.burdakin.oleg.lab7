@@ -12,30 +12,25 @@ const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
 
 const generatePoints = (vertexNum, startX, startY, radius) => {
     const points = []
     for (let i = 0; i < vertexNum; i++) 
     {
-        points.push({x: startX + radius * Math.cos(i * 2 * Math.PI / vertexNum), y: startY + radius * Math.sin(i * 2 * Math.PI / vertexNum)})
+        points.push({
+            x: startX + radius * Math.cos(i * 2 * Math.PI / vertexNum), 
+            y: startY + radius * Math.sin(i * 2 * Math.PI / vertexNum)
+        })
     }
     return points
 }
 
-const drawRegularPolygon = (vertexNum) => {
+const drawRegularPolygon = (vertexNum, color) => {
     const points = generatePoints(vertexNum, getRandomInt(50,500), getRandomInt(50,500), 50)
-    canvasHandler.drawElement(new Element(points, getRandomColor()))
+    canvasHandler.drawElement(new Element(points, color))
 }
 
-const onButtonClick = (vertexNum) => {
+const onButtonClick = (button) => {
     const amount = parseInt(document.querySelector("input").value)
 
     if (isNaN(amount))
@@ -46,12 +41,12 @@ const onButtonClick = (vertexNum) => {
 
     for (let i = 0; i < amount; i++)
     {
-        drawRegularPolygon(vertexNum)
+        drawRegularPolygon(parseInt(button.dataset.vertexNum), button.dataset.polygonColor)
     }
 }
 
 document.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", () => {
-        onButtonClick(parseInt(button.dataset.vertexNum))
+        onButtonClick(button)
     })
 })

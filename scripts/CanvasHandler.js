@@ -10,8 +10,11 @@ export class CanvasHandler
         this.elements = []
         this.drawer = drawer
         this.adjustCanvas()
+        this.prevElement = null
+        this.prevElementColor = null
 
         this.canvas.addEventListener("dblclick", this.onCanvasDblClick.bind(this))
+        this.canvas.addEventListener("click", this.onCanvasClick.bind(this))
         window.addEventListener('resize', this.adjustCanvas.bind(this));
     }
 
@@ -53,6 +56,29 @@ export class CanvasHandler
             if (this.isPointInPolygon({x, y}, this.elements[i].vertices)) 
             {
                 this.elements = this.elements.filter(e => e !== this.elements[i])
+                this.redraw()
+                break
+            }
+        }
+    }
+
+    onCanvasClick(event)
+    {
+        const rect = this.canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        for (let i = this.elements.length - 1; i >= 0; i--) 
+        {
+            if (this.isPointInPolygon({x, y}, this.elements[i].vertices)) 
+            {
+                if(this.prevElement != null)
+                {
+                    this.prevElement.color = this.prevElementColor
+                }
+                this.prevElement = this.elements[i]
+                this.prevElementColor = this.elements[i].color
+                this.elements[i].color = "yellow"
                 this.redraw()
                 break
             }
