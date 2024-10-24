@@ -68,21 +68,22 @@ export class CanvasHandler
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
+        if(this.prevElement != null)
+        {
+            this.prevElement.color = this.prevElementColor
+        }
+
         for (let i = this.elements.length - 1; i >= 0; i--) 
         {
             if (this.isPointInPolygon({x, y}, this.elements[i].vertices)) 
             {
-                if(this.prevElement != null)
-                {
-                    this.prevElement.color = this.prevElementColor
-                }
                 this.prevElement = this.elements[i]
                 this.prevElementColor = this.elements[i].color
                 this.elements[i].color = "yellow"
-                this.redraw()
                 break
             }
         }
+        this.redraw()
     }
 
     isPointInPolygon(point, vertices) 
