@@ -26,7 +26,7 @@ const generatePoints = (vertexNum, startX, startY, radius) => {
 }
 
 const drawRegularPolygon = (vertexNum, color) => {
-    const points = generatePoints(vertexNum, getRandomInt(50,500), getRandomInt(50,500), 50)
+    const points = generatePoints(vertexNum, getRandomInt(50,500), getRandomInt(50,500), getRandomInt(10, 90))
     canvasHandler.drawElement(new Element(points, color))
 }
 
